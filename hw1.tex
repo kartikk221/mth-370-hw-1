@@ -1,0 +1,126 @@
+\documentclass[10pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+
+% enumitem package for easy control of spacing around and in lists
+\usepackage{enumitem}
+
+% todonotes package for making comments
+\usepackage[textwidth=4cm,textsize=small,shadow]{todonotes}
+\newcommand{\answerbox}[1]{\todo[inline,author={Kartik},color=lightgray,size=normalsize]{#1}}
+\newcommand{\marginbox}[1]{\todo[color=green,size=small]{#1}}
+
+% package amsrefs to make citations
+\usepackage{amsrefs}
+
+% geometry package for setting nonstandard margins
+\usepackage[letterpaper,right=6cm,left=2cm]{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ...
+
+% for proper formatting of programs
+\usepackage{listings}
+
+%hyperref package for adding hyperlinks
+\usepackage{hyperref}
+
+% fancy math notation for important sets
+\newcommand{\NN}{\ensuremath{\mathbb N}}
+\newcommand{\ZZ}{\ensuremath{\mathbb Z}}
+\newcommand{\QQ}{\ensuremath{\mathbb Q}}
+\newcommand{\RR}{\ensuremath{\mathbb R}}
+\newcommand{\TT}{\ensuremath{\mathbb T}}
+\newcommand{\CC}{\ensuremath{\mathbb C}}
+\newcommand{\FF}{\ensuremath{\mathbb F}}
+\newcommand{\cA}{\ensuremath{\cal A}}
+
+\newtheorem{theorem}{Theorem} %[section]
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}{Claim}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\begin{document}
+\title{MTH370: Homework Set \#1}
+\author{Kartik Kumar}
+\date{September 6th, 2023}
+\maketitle
+
+You should attempt each of these problems, and write your solution using \LaTeX as best as you are able. Exchange files with your partner on Saturday, September 2: not before and not after! Then, with your partner, produce a single \LaTeX file that has your combined best work, print out the PDF, and hand the PDF to your professor on Wednesday, September 6. Give the source file the name ``hw1-partner1-partner2.tex'', and email it to Prof O'Bryant with the subject line ``MTH370 HW1''.
+
+You should keep both your and your partner's separate versions, and your combined version.
+
+\begin{enumerate}[noitemsep]
+    \item Get access to \LaTeX\ and compile this document. That may involve installing it on a personal machine, but these days the easiest way is to set up a free account on \href{http://www.overleaf.com}{Overleaf}. Then look through the header. Change the author to your name, and change the date to the due date for this assignment, September 6, 2023. How did you get access to \LaTeX?
+        \answerbox{I went to Overleaf.}
+    \item Get access to Python. For most of you, this means installing it and VSCode on your personal machines. I'm open to other solutions.
+        \begin{enumerate}
+            \item How did you get access to Python?
+                \answerbox{First, I went to the python website to download the Windows x64 Python v3.11.5 installer to install Python runtime. secondly, I went to the Visual Studio Code website to download the Windows x64 VSCode installer to install VSCode. Lastly, I installed the official Python extension in Visual Studio Code to give me intellisense and formatting capabilities within the code editor.}
+            \item The following code implements a factorial function.
+\lstset{language=Python,caption={Python Code for Factorial},frame=single}
+            \begin{lstlisting}
+def factorial_recursive(n):
+    if n == 0 or n == 1:
+        return 1
+    else:
+        return n * factorial_recursive(n - 1)
+
+# Test the function
+num = int(input("Enter a number: "))
+result = factorial_recursive(num)
+print(f"The factorial of {num} is {result}")
+            \end{lstlisting}
+            Use it to compute $100!$. What is the largest $n$ for which \emph{you} can compute $n!$ in under $1$ minute?
+            \answerbox{The factorial of 100 is \scalebox{0.62}{93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000}}
+            \lstset{language=Python,caption={Python Code for Largest Factorial In 1 Minute},frame=single}
+            \begin{lstlisting}
+                import time
+
+                n = 0
+                factorial = 1
+                start_time = time.time()
+
+                while True:
+                    # Base factorial case
+                    if n == 0 or n == 1:
+                        factorial = 1
+                    else:
+                        factorial *= n
+
+                    # Increment the number
+                    n += 1
+
+                    # Check elapsed time after each iteration
+                    if time.time() - start_time > 60:
+                        break
+
+                # Print the result
+                print(f"Largest computable factorial in under 1 minute: {n - 1}")
+            \end{lstlisting}
+            \answerbox{Largest computable factorial in under 1 minute: 481209}
+        \end{enumerate}
+    \item Write the following complex numbers in cartesian form, i.e., as $a+bi$ with $a,b$ real.
+        \begin{enumerate}
+            \item $\cos(\pi/3)+i \sin(\pi/3) +\frac{1}{\sqrt2}-3i$
+            \item $(5-2i)(3+3i)$
+            \item $(5-2i)^4$\marginbox{Don't forget this one!}
+            \item $\displaystyle \frac{5-2i}{3+i}$
+        \end{enumerate}
+    \item Write the following dual numbers in cartesian form, i.e., as $a+b\varepsilon$ with $a,b$ real.
+    \begin{enumerate}
+        \item $\cos(\pi/3)+\varepsilon \sin(\pi/3) +\frac{1}{\sqrt2}-3\varepsilon$
+        \item $(5-2\varepsilon)(3+3\varepsilon)$
+        \item $(5-2\varepsilon)^4$
+        \item $\displaystyle \frac{5-2\varepsilon}{3+\varepsilon}$
+        \item $\sin(2+5\varepsilon)$
+        \item $\displaystyle \left(\frac{\cos \left(e^{2+\varepsilon}\right)}{2+\varepsilon+2}\right)^2+\sin (2+\varepsilon) e^{-\sin (2+\varepsilon)}$
+    \end{enumerate}
+    \item Explain how to use calculus and Newton's Method to find the maximum value of $$f(x)=\left(\frac{\cos \left(e^x\right)}{x+2}\right)^2+\sin (x) e^{-\sin (x)}$$ on $[0,2]$, correct to $4$ digits. If you have to pay \$1 each time you evaluate $\sin,\cos,\exp$ (at any nontrivial value), how expensive will your solution be?
+
+    One way to do this problem, were it important, would be to just ask Wolfram$\mid$Alpha. But at this point, we are more interested in building the muscles needed to attack harder problems, and to understand which problems machines can handle and on which problems they become untrustworthy.
+\end{enumerate}
+
+\end{document}
