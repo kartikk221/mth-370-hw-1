@@ -58,7 +58,11 @@ You should keep both your and your partner's separate versions, and your combine
     \item Get access to Python. For most of you, this means installing it and VSCode on your personal machines. I'm open to other solutions.
         \begin{enumerate}
             \item How did you get access to Python?
-                \answerbox{First, I went to the python website to download the Windows x64 Python v3.11.5 installer to install Python runtime. secondly, I went to the Visual Studio Code website to download the Windows x64 VSCode installer to install VSCode. Lastly, I installed the official Python extension in Visual Studio Code to give me intellisense and formatting capabilities within the code editor.}
+                \answerbox{I access Python through the local runtime on my machine.
+                \newline 1. Download Python runtime installer from website.
+                \newline 2. Install the Python Tools extension for VSCode
+                \newline 3. Write Python code using VSCode
+                \newline 4. Execute Python through the commmand line using "python file.py"}
             \item The following code implements a factorial function.
 \lstset{language=Python,caption={Python Code for Factorial},frame=single}
             \begin{lstlisting}
@@ -74,53 +78,95 @@ result = factorial_recursive(num)
 print(f"The factorial of {num} is {result}")
             \end{lstlisting}
             Use it to compute $100!$. What is the largest $n$ for which \emph{you} can compute $n!$ in under $1$ minute?
-            \answerbox{The factorial of 100 is \scalebox{0.62}{93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000}}
+            \answerbox{The factorial of 100 is:
+            \newline9332621544394415268169923885626670049
+            \newline071596826438162146859296389521759999322991560894146
+            \newline3976156518286253697920827223758251185210916864000000000000000000
+            \newline000000}
             \lstset{language=Python,caption={Python Code for Largest Factorial In 1 Minute},frame=single}
             \begin{lstlisting}
-                import time
+import sys
+import time
 
-                n = 0
-                factorial = 1
-                start_time = time.time()
+# We need to do this because output factorial is very large
+sys.set_int_max_str_digits(100000000)
 
-                while True:
-                    # Base factorial case
-                    if n == 0 or n == 1:
-                        factorial = 1
-                    else:
-                        factorial *= n
+n = 0
+factorial = 1
+start_time = time.time()
 
-                    # Increment the number
-                    n += 1
+while True:
+    # Base factorial case
+    if n == 0 or n == 1:
+        factorial = 1
+    else:
+        factorial *= n
 
-                    # Check elapsed time after each iteration
-                    if time.time() - start_time > 60:
-                        break
+    # Increment the number
+    n += 1
 
-                # Print the result
-                print(f"Largest computable factorial in under 1 minute: {n - 1}")
+    # Check elapsed time after each iteration
+    if time.time() - start_time > 60:
+        break
+
+# Print the result
+print(f"Largest computable factorial in under 1 minute: {n - 1}!")
+print(f"Time elapsed: {time.time() - start_time} seconds")
+print(f"{n - 1}! = a number that is {len(str(factorial))} digits long")
             \end{lstlisting}
-            \answerbox{Largest computable factorial in under 1 minute: 481209}
+            \answerbox{\newline Largest computable factorial in under 1 minute: 490409!
+\newline Time elapsed: 60.000478744506836 seconds
+\newline 490409! = a number that is 2577723 digits long\newline\newline Note! This was calculated on an i9-10850k @ 4.8 Ghz with 32 GB Memory.}
         \end{enumerate}
     \item Write the following complex numbers in cartesian form, i.e., as $a+bi$ with $a,b$ real.
         \begin{enumerate}
             \item $\cos(\pi/3)+i \sin(\pi/3) +\frac{1}{\sqrt2}-3i$
+            \answerbox{$\frac{1+\sqrt{2}}{2}+\frac{-6+\sqrt{3}}{2}i$}
+
             \item $(5-2i)(3+3i)$
-            \item $(5-2i)^4$\marginbox{Don't forget this one!}
+            \answerbox{$21+9i$}
+
+            \item $(5-2i)^4$
+            \answerbox{$41-840i$}
+
             \item $\displaystyle \frac{5-2i}{3+i}$
+            \answerbox{$\frac{13}{10}-\frac{11}{10}i$}
         \end{enumerate}
     \item Write the following dual numbers in cartesian form, i.e., as $a+b\varepsilon$ with $a,b$ real.
     \begin{enumerate}
         \item $\cos(\pi/3)+\varepsilon \sin(\pi/3) +\frac{1}{\sqrt2}-3\varepsilon$
+        \answerbox{$\frac{1+\sqrt{2}}{2}+\frac{-6+\sqrt{3}}{2}\varepsilon$}
+
         \item $(5-2\varepsilon)(3+3\varepsilon)$
+        \answerbox{$15+9\varepsilon$}
+
         \item $(5-2\varepsilon)^4$
+        \answerbox{$625-1000\varepsilon$}
+
         \item $\displaystyle \frac{5-2\varepsilon}{3+\varepsilon}$
+        \answerbox{$\frac{15}{9}-\frac{11}{9}\varepsilon$}
+
         \item $\sin(2+5\varepsilon)$
+        \answerbox{$\sin(2)+5\cos{2} \varepsilon$}
+
         \item $\displaystyle \left(\frac{\cos \left(e^{2+\varepsilon}\right)}{2+\varepsilon+2}\right)^2+\sin (2+\varepsilon) e^{-\sin (2+\varepsilon)}$
+        \answerbox{Confused}
+
     \end{enumerate}
     \item Explain how to use calculus and Newton's Method to find the maximum value of $$f(x)=\left(\frac{\cos \left(e^x\right)}{x+2}\right)^2+\sin (x) e^{-\sin (x)}$$ on $[0,2]$, correct to $4$ digits. If you have to pay \$1 each time you evaluate $\sin,\cos,\exp$ (at any nontrivial value), how expensive will your solution be?
 
     One way to do this problem, were it important, would be to just ask Wolfram$\mid$Alpha. But at this point, we are more interested in building the muscles needed to attack harder problems, and to understand which problems machines can handle and on which problems they become untrustworthy.
+
+    \begin{enumerate}
+    \item First, compute the first derivative \(f'(x)\) of the function. This will involve using the chain rule, product rule, and quotient rule of differentiation.
+    \item Set \(f'(x) = 0\) to find the critical points within the interval [0,2].
+    \item Use Newton's method to approximate the roots of \(f'(x) = 0\). Start with an initial guess, say \(x_0\), within the interval. Then, iteratively apply the formula:
+    \[ x_{n+1} = x_n - \frac{f'(x_n)}{f''(x_n)} \]
+    until the difference between successive approximations is small or until we have reached a desired accuracy.
+    \item Compute the second derivative \(f''(x)\) to determine the nature of each critical point. If \(f''(x) > 0\), then \(f(x)\) has a local minimum at that point. If \(f''(x) < 0\), then \(f(x)\) has a local maximum.
+    \item Evaluate the function \(f(x)\) at the critical points and the endpoints of the interval [0,2] to determine the maximum value on the interval.
+    \item Keep track of the number of times we evaluate \(\sin\), \(\cos\), and \(\exp\) to determine the total cost.
+\end{enumerate}
 \end{enumerate}
 
 \end{document}
